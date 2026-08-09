@@ -1,0 +1,858 @@
+{
+  "info": {
+    "_postman_id": "126a3e99-ce64-4c7e-b0aa-4c8911769cfa",
+    "name": "Курсовая работа по API Ульянов С.И",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51881150",
+    "_collection_link": "https://go.postman.co/collection/51881150-126a3e99-ce64-4c7e-b0aa-4c8911769cfa?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Позитивный",
+      "item": [
+        {
+          "name": "1. Создание ЛС в 25 минут",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var key = \"event_id\"\r",
+                  "var value = pm.response.json().data.payload.id\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "var key =\"startAt\"\r",
+                  "var value = pm.response.json().data.startAt\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\",\r\n    \"description\": \"Просмотреть вебинар\",\r\n    \"title\": \"Вебинар по API\",\r\n    \"startAt\": \"2026-02-14T19:00:00+03:00\",\r\n    \"endAt\": \"2026-02-14T19:25:00+03:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/createPersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "createPersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Создание ЛС длительностью в 3 часа",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var key = \"event_id\"\r",
+                  "var value = pm.response.json().data.payload.id\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "var key =\"startAt\"\r",
+                  "var value = pm.response.json().data.startAt\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\",\r\n    \"description\": \"Просмотреть вебинар\",\r\n    \"title\": \"Вебинар по API\",\r\n    \"startAt\": \"2026-02-14T16:00:00+03:00\",\r\n    \"endAt\": \"2026-02-14T19:30:00+03:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/createPersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "createPersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Создание события в описании которой ссылкой",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\",\r\n    \"description\": \"Перейти по ссылке : https://my.sky.pro\",\r\n    \"title\": \"Вебинар по API\",\r\n    \"startAt\": \"2026-02-14T19:00:00+03:00\",\r\n    \"endAt\": \"2026-02-14T20:00:00+03:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/createPersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "createPersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Создание события с выбранным цветом",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const json = pm.response.json();\r",
+                  "pm.environment.set(\"eventId\", json.id);\r",
+                  "\r",
+                  "pm.test(\"Event created\", function () {\r",
+                  "  pm.expect(json).to.have.property(\"id\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Background color is correct\", function () {\r",
+                  "  pm.expect(json.backgroundColor).to.eql(\"#FFCC00\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Text color is correct\", function () {\r",
+                  "  pm.expect(json.textColor).to.eql(\"#000000\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Вебинар по API\",\r\n    \"description\": \"Тестовое событие с цветом\",\r\n    \"startAt\": \"2026-02-14T19:00:00+03:00\",\r\n    \"endAt\": \"2026-02-14T19:30:00+03:00\",\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/createPersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "createPersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5. Создание ЛС в прошлом",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var key = \"event_id\"\r",
+                  "var value = pm.response.json().data.payload.id\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "var key =\"startAt\"\r",
+                  "var value = pm.response.json().data.startAt\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\",\r\n    \"description\": \"Просмотреть вебинар\",\r\n    \"title\": \"Вебинар по API\",\r\n    \"startAt\": \"2026-02-09T19:00:00+03:00\",\r\n    \"endAt\": \"2026-02-09T19:30:00+03:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/createPersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "createPersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6. Получение расписания за период одной недели",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"from\": \"2026-02-09T00:00:00+03:00\",\r\n    \"till\": \"2026-02-15T23:59:59+03:00\",\r\n    \"onlyTypes\": []\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/events",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7. Получение созданного личного события в расписании",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"from\": \"{{startAt}}\",\r\n    \"till\": \"{{startAt}}\",\r\n    \"onlyTypes\": [\"slot\"]\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/events",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "8.Редактирование названия события",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var key = \"event_id\"\r",
+                  "var value = pm.response.json().data.payload.id\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "var key = \"startAt\"\r",
+                  "var value = pm.response.json().data.startAt\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": {{event_id}},\r\n    \"oldStartAt\": \"{{startAt}}\",\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\",\r\n    \"description\": \"Обновленное описание-просмотреть вебинар\",\r\n    \"title\": \"Обновленное название - Вебинар по API\",\r\n    \"startAt\": \"{{startAt}}\",\r\n    \"endAt\": \"2026-02-14T19:30:00+03:00\"\r\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/updatePersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "updatePersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "9. Редактирование времени события",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var response = pm.response.json();\r",
+                  "\r",
+                  "// статус\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// если обновление прошло успешно\r",
+                  "if (response.data) {\r",
+                  "\r",
+                  "    // ВАЖНО: id может измениться\r",
+                  "    pm.collectionVariables.set(\"event_id\", response.data.id);\r",
+                  "\r",
+                  "    // startAt ОБНОВЛЯЕМ — он понадобится дальше\r",
+                  "    pm.collectionVariables.set(\"startAt\", response.data.startAt);\r",
+                  "\r",
+                  "    pm.test(\"Event time updated\", function () {\r",
+                  "        pm.expect(response.data.startAt).to.eql(\"2026-02-14T20:00:00+03:00\");\r",
+                  "        pm.expect(response.data.endAt).to.eql(\"2026-02-14T21:00:00+03:00\");\r",
+                  "    });\r",
+                  "}\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": {{event_id}},\r\n    \"oldStartAt\": \"{{startAt}}\",\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\",\r\n    \"description\": \"Обновленное описание\",\r\n    \"title\": \"Обновленное название\",\r\n    \"startAt\": \"2026-02-14T20:00:00+03:00\",\r\n    \"endAt\": \"2026-02-14T21:00:00+03:00\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/updatePersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "updatePersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "10. Удаление ЛС",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": {{event_id}},\r\n    \"startAt\": \"{{startAt}}\"\r\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/removePersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "removePersonal"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Негативный",
+      "item": [
+        {
+          "name": "1. Событий без названия",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var key = \"event_id\"\r",
+                  "var value = pm.response.json().data.payload.id\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "var key = \"startAt\"\r",
+                  "var value = pm.response.json().data.startAt\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"backgroundColor\": \"#FFF7C7\",\r\n\"color\": \"#FAC641\",\r\n\"description\": \"Описание\",\r\n\"title\": \"\",\r\n\"startAt\": \"2026-02-14T14:00:00+03:00\",\r\n\"endAt\": \"2026-02-14T14:00:00+03:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/createPersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "createPersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Создание события с названием > 40 символов",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var key = \"event_id\"\r",
+                  "var value = pm.response.json().data.payload.id\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "var key = \"startAt\"\r",
+                  "var value = pm.response.json().data.startAt\r",
+                  "pm.collectionVariables.set(key, value);\r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"backgroundColor\": \"#FFF7C7\",\r\n\"color\": \"#FAC641\",\r\n\"description\": \"Описание\",\r\n\"title\": \"Фестиваль современного цифрового искусства в городе\",\r\n\"startAt\": \"2026-02-14T14:00:00+03:00\",\r\n\"endAt\": \"2026-02-14T14:00:00+03:00\"\r\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/createPersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "createPersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Создание события с некорректным временем",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\",\r\n    \"title\": \"Некорректные даты\",\r\n    \"startAt\": \"2026-02-14T19:30:00+03:00\",\r\n    \"endAt\": \"2026-02-14T19:00:00+03:00\"\r\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/createPersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "createPersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Запрос с невалидным токеном",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/removePersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "removePersonal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5. Удаление несуществующего события",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token_global={{my_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": \"999999999\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/v2/schedule/removePersonal",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v2",
+                "schedule",
+                "removePersonal"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{my_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": ""
+    },
+    {
+      "key": "my_token",
+      "value": ""
+    },
+    {
+      "key": "event_id",
+      "value": ""
+    },
+    {
+      "key": "startAt",
+      "value": ""
+    }
+  ]
+}
