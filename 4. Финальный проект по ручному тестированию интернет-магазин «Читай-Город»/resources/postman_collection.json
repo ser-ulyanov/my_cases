@@ -1,0 +1,700 @@
+{
+  "info": {
+    "_postman_id": "0d0972be-5a23-435f-a0d0-b4781f1ef563",
+    "name": "Финальный проект по ручному тестированию \"Читай Город\"",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51881150",
+    "_collection_link": "https://go.postman.co/collection/51881150-0d0972be-5a23-435f-a0d0-b4781f1ef563?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Позитивные",
+      "item": [
+        {
+          "name": "Успешное обновление токена (валидный refresh token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Берём ответ сервера\r",
+                  "let json = pm.response.json();\r",
+                  "\r",
+                  "// Достаём токены из структуры ответа\r",
+                  "let access = json.data?.attributes?.token?.accessToken;\r",
+                  "let refresh = json.data?.attributes?.token?.refreshToken;\r",
+                  "\r",
+                  "// Сохраняем в переменные КОЛЛЕКЦИИ (collection variables)\r",
+                  "if (access) pm.collectionVariables.set('access_token', access);\r",
+                  "if (refresh) pm.collectionVariables.set('refresh_token', refresh);\r",
+                  "\r",
+                  "// Тест на статус 200\r",
+                  "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+                  "\r",
+                  "// Тест на наличие токенов\r",
+                  "pm.test(\"Tokens exist\", () => {\r",
+                  "    pm.expect(access).to.not.be.undefined;\r",
+                  "    pm.expect(refresh).to.not.be.undefined;\r",
+                  "});\r",
+                  "\r",
+                  "// Лог для наглядности\r",
+                  "console.log(\"Updated tokens:\", { access_token: access, refresh_token: refresh });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"refreshToken\": \"{{refresh_token}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://web-agr.chitai-gorod.ru/web/api/v2/auth/refresh",
+              "protocol": "https",
+              "host": [
+                "web-agr",
+                "chitai-gorod",
+                "ru"
+              ],
+              "path": [
+                "web",
+                "api",
+                "v2",
+                "auth",
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Получение персональных данных профиля с валидным токеном",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 401) {\r",
+                  "    pm.environment.set(\"retry_request\", pm.info.requestName);\r",
+                  "}\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profile/personal-data",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile",
+                "personal-data"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Получение списка товаров в корзине авторизованного пользователя",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 401) {\r",
+                  "    pm.environment.set(\"retry_request\", pm.info.requestName);\r",
+                  "}\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/cart",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Добавление товара в корзину",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "content-type",
+                "value": "application/json"
+              },
+              {
+                "key": "origin",
+                "value": "https://www.chitai-gorod.ru"
+              },
+              {
+                "key": "platform",
+                "value": "desktop"
+              },
+              {
+                "key": "priority",
+                "value": "u=1, i"
+              },
+              {
+                "key": "referer",
+                "value": "https://www.chitai-gorod.ru/"
+              },
+              {
+                "key": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 YaBrowser/26.3.0.0 Safari/537.36"
+              },
+              {
+                "key": "user-id",
+                "value": "5423512"
+              },
+              {
+                "key": "Cookie",
+                "value": "__ddg1_=ObxOQp1WtQP7tRmT7ZHl; chg_visitor_id=686cb2b2-1485-4298-a750-e13d04429f3b; __P__wuid=2a8c5f1fdb7d474c7ab51b0ed09ab4b4; stDeIdU=2a8c5f1fdb7d474c7ab51b0ed09ab4b4; __dpx_uid=2-2yvt6vnj-mmhhs05q; chg_onboarding_done=done; __ddg2_=UyLPCAldBayHhdl0; refresh-token=x9QtLHSVvqvgnyImJEtrJtqZ3lvgkvGI3SNDHn75GZAsIoGmLNkuVhK68g1eBurXKsastg50J74j3kMg; _ymab_param=WEkY1U1A8XkJZRZHVR4TcuDWaxQa-DPg9HZ403IiZ1MzNCaDCPzzhLS74SC3FgIB6Ur8-b5BMMeKQ6Nd6kDDKRZrrVI; utm_custom_source=default; chg_viewed_products=%5B3097821%2C7465295%2C3073166%2C3119931%2C2785407%2C3144536%2C3147540%2C2948130%2C3117857%2C3109699%2C3092779%2C2877978%2C3149889%2C3149803%2C3059290%2C2510088%2C3140698%2C3148672%2C3148966%2C3086658%2C2054981%5D; __ddg9_=37.79.94.122; access-token=Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VzZXItcmlnaHQiLCJzdWIiOjU0MjM1MTIsImlhdCI6MTc3MzkzMjA3MCwiZXhwIjoxNzczOTM1NjcwLCJ0eXBlIjoyMCwianRpIjoiMDE5ZDA2OTctNDU4OC03OGNlLWIzNmMtZGQxMTM3ZDBhNjIxIiwicm9sZXMiOjEwfQ.QzQLpJ_uow6mGnoIHqSkDRV8ITpP0zqW-oZFIC_yuSPvfe40BRZv5FaI7nWtAG31Zu703QF8bcNApOODtwn4QbOA2wlHxqEqzHF1AONQpoyK6z3vubOhJIGTHRN4-WI40KIi6aVxYCpS0M6zMoVuEboCknAyFHirUWCkgk9re220dlfRjCa81p1MZF7T0hZBhE51BjX_1d6Dn_bO8lzI_FuEDW87tCjA7nJSvb_0rS3Qqb_w90nKf6p3vzkDvvoCC9EUuQNzeZfmE9almwuhRoZbDUoqe3drLUHYPW9qS3jz5fkM2QClF-bLmFJRzESGDYcCwweRbq61oVO6F7eT6Q; vIdUid=a343c9f1-149e-4938-93c9-465a930090fb; stSeStTi=1773932074185; stLaEvTi=1773933545493; __ddg8_=RP3n2gNvhOEuZgLI; __ddg10_=1773933546",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"id\":3097821}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://web-agr.chitai-gorod.ru/web/api/v1/cart/product",
+              "protocol": "https",
+              "host": [
+                "web-agr",
+                "chitai-gorod",
+                "ru"
+              ],
+              "path": [
+                "web",
+                "api",
+                "v1",
+                "cart",
+                "product"
+              ]
+            },
+            "description": "Generated from cURL: curl 'https://web-agr.chitai-gorod.ru/web/api/v1/cart/product' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'accept-language: ru,en;q=0.9' \\\r\n  -H 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VzZXItcmlnaHQiLCJzdWIiOjU0MjM1MTIsImlhdCI6MTc3MzkzMjA3MCwiZXhwIjoxNzczOTM1NjcwLCJ0eXBlIjoyMCwianRpIjoiMDE5ZDA2OTctNDU4OC03OGNlLWIzNmMtZGQxMTM3ZDBhNjIxIiwicm9sZXMiOjEwfQ.QzQLpJ_uow6mGnoIHqSkDRV8ITpP0zqW-oZFIC_yuSPvfe40BRZv5FaI7nWtAG31Zu703QF8bcNApOODtwn4QbOA2wlHxqEqzHF1AONQpoyK6z3vubOhJIGTHRN4-WI40KIi6aVxYCpS0M6zMoVuEboCknAyFHirUWCkgk9re220dlfRjCa81p1MZF7T0hZBhE51BjX_1d6Dn_bO8lzI_FuEDW87tCjA7nJSvb_0rS3Qqb_w90nKf6p3vzkDvvoCC9EUuQNzeZfmE9almwuhRoZbDUoqe3drLUHYPW9qS3jz5fkM2QClF-bLmFJRzESGDYcCwweRbq61oVO6F7eT6Q' \\\r\n  -H 'content-type: application/json' \\\r\n  -b '__ddg1_=ObxOQp1WtQP7tRmT7ZHl; chg_visitor_id=686cb2b2-1485-4298-a750-e13d04429f3b; __P__wuid=2a8c5f1fdb7d474c7ab51b0ed09ab4b4; stDeIdU=2a8c5f1fdb7d474c7ab51b0ed09ab4b4; __dpx_uid=2-2yvt6vnj-mmhhs05q; chg_onboarding_done=done; __ddg2_=UyLPCAldBayHhdl0; refresh-token=x9QtLHSVvqvgnyImJEtrJtqZ3lvgkvGI3SNDHn75GZAsIoGmLNkuVhK68g1eBurXKsastg50J74j3kMg; _ymab_param=WEkY1U1A8XkJZRZHVR4TcuDWaxQa-DPg9HZ403IiZ1MzNCaDCPzzhLS74SC3FgIB6Ur8-b5BMMeKQ6Nd6kDDKRZrrVI; utm_custom_source=default; chg_viewed_products=%5B3097821%2C7465295%2C3073166%2C3119931%2C2785407%2C3144536%2C3147540%2C2948130%2C3117857%2C3109699%2C3092779%2C2877978%2C3149889%2C3149803%2C3059290%2C2510088%2C3140698%2C3148672%2C3148966%2C3086658%2C2054981%5D; __ddg9_=37.79.94.122; access-token=Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VzZXItcmlnaHQiLCJzdWIiOjU0MjM1MTIsImlhdCI6MTc3MzkzMjA3MCwiZXhwIjoxNzczOTM1NjcwLCJ0eXBlIjoyMCwianRpIjoiMDE5ZDA2OTctNDU4OC03OGNlLWIzNmMtZGQxMTM3ZDBhNjIxIiwicm9sZXMiOjEwfQ.QzQLpJ_uow6mGnoIHqSkDRV8ITpP0zqW-oZFIC_yuSPvfe40BRZv5FaI7nWtAG31Zu703QF8bcNApOODtwn4QbOA2wlHxqEqzHF1AONQpoyK6z3vubOhJIGTHRN4-WI40KIi6aVxYCpS0M6zMoVuEboCknAyFHirUWCkgk9re220dlfRjCa81p1MZF7T0hZBhE51BjX_1d6Dn_bO8lzI_FuEDW87tCjA7nJSvb_0rS3Qqb_w90nKf6p3vzkDvvoCC9EUuQNzeZfmE9almwuhRoZbDUoqe3drLUHYPW9qS3jz5fkM2QClF-bLmFJRzESGDYcCwweRbq61oVO6F7eT6Q; vIdUid=a343c9f1-149e-4938-93c9-465a930090fb; stSeStTi=1773932074185; stLaEvTi=1773933545493; __ddg8_=RP3n2gNvhOEuZgLI; __ddg10_=1773933546' \\\r\n  -H 'initial-feature: product-slug-id' \\\r\n  -H 'origin: https://www.chitai-gorod.ru' \\\r\n  -H 'platform: desktop' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://www.chitai-gorod.ru/' \\\r\n  -H 'sec-ch-ua: \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"YaBrowser\";v=\"26.3\", \"Yowser\";v=\"2.5\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-site' \\\r\n  -H 'shop-brand: chitaiGorod' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 YaBrowser/26.3.0.0 Safari/537.36' \\\r\n  -H 'user-id: 5423512' \\\r\n  -H 'x-forwarded-for;' \\\r\n  --data-raw '{\"id\":3097821}'"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Негативные",
+      "item": [
+        {
+          "name": "Пустой поисковый запрос",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Проверяем, что это 400 (негативный кейс)\r",
+                  "pm.test(\"Статус должен быть 400 Bad Request\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "// Проверяем, что ответ содержит ошибку\r",
+                  "pm.test(\"Ответ содержит сообщение об ошибке\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData).to.be.an('object');\r",
+                  "    console.log(jsonData); // Посмотрим структуру ошибки\r",
+                  "});\r",
+                  "\r",
+                  "// Тест на то, что это НЕ 200 (не успех)\r",
+                  "pm.test(\"Статус не должен быть 200\", function () {\r",
+                  "    pm.expect(pm.response.code).not.equal(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 YaBrowser/26.3.0.0 Safari/537.36",
+                "type": "text"
+              },
+              {
+                "key": "platform",
+                "value": "desktop",
+                "type": "text"
+              },
+              {
+                "key": "origin",
+                "value": "https://www.chitai-gorod.ru",
+                "type": "text"
+              },
+              {
+                "key": "referer",
+                "value": "https://www.chitai-gorod.ru/",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"searchTerm\": \"\",\r\n    \"page\": 1,\r\n    \"pageSize\": 10\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://web-agr.chitai-gorod.ru/web/api/v2/search/facet-search?customerCityId=11183&phrase",
+              "protocol": "https",
+              "host": [
+                "web-agr",
+                "chitai-gorod",
+                "ru"
+              ],
+              "path": [
+                "web",
+                "api",
+                "v2",
+                "search",
+                "facet-search"
+              ],
+              "query": [
+                {
+                  "key": "customerCityId",
+                  "value": "11183"
+                },
+                {
+                  "key": "phrase",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Запрос профиля с невалидным токеном",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let json = pm.response.json();\r",
+                  "pm.environment.set('access_token', json.accessToken);\r",
+                  "pm.environment.set('refresh_token', json.refreshToken);\r",
+                  "\r",
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "invalid_token_123",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Запрос несуществующего товара",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Проверка статуса\r",
+                  "pm.test(\"Статус не должен быть 200\", function () {\r",
+                  "    pm.expect(pm.response.code).not.equal(200);\r",
+                  "});\r",
+                  "\r",
+                  "// БЕЗОПАСНАЯ проверка ответа\r",
+                  "pm.test(\"Ответ содержит ошибку\", function () {\r",
+                  "    try {\r",
+                  "        // Пытаемся распарсить как JSON\r",
+                  "        const json = pm.response.json();\r",
+                  "        pm.expect(json).to.have.property('error')\r",
+                  "            .or.have.property('message');\r",
+                  "    } catch (e) {\r",
+                  "        // Если не JSON, проверяем текст\r",
+                  "        const text = pm.response.text();\r",
+                  "        console.log(\"Ответ не в JSON, это текст:\", text);\r",
+                  "        \r",
+                  "        // Проверяем, что текст содержит \"404\" или \"not found\"\r",
+                  "        pm.expect(text).to.include(\"404\");\r",
+                  "        pm.expect(text).to.include(\"not found\");\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}product/prestuplenie-i-nakazanie-2054981",
+              "host": [
+                "{{base_url}}product"
+              ],
+              "path": [
+                "prestuplenie-i-nakazanie-2054981"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Использование неверного HTTP-метода (POST вместо GET)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 405\", function () {\r",
+                  "    pm.response.to.have.status(405);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "invalid_token_123",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Некорректный формат запроса (неверный Accept)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Главная проверка — должен быть 406\r",
+                  "pm.test(\"Статус должен быть 406 Not Acceptable\", function () {\r",
+                  "    pm.expect(pm.response.code).to.equal(406);\r",
+                  "});\r",
+                  "\r",
+                  "// Запасной вариант (если сервер отвечает 400)\r",
+                  "pm.test(\"Статус должен быть 406 или 400\", function () {\r",
+                  "    pm.expect(pm.response.code).to.be.oneOf([406, 400]);\r",
+                  "});\r",
+                  "\r",
+                  "// Точно не 200!\r",
+                  "pm.test(\"Статус не должен быть 200\", function () {\r",
+                  "    pm.expect(pm.response.code).not.equal(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Проверяем, есть ли токен перед отправкой\r",
+                  "if (!pm.collectionVariables.get(\"access_token\")) {\r",
+                  "    console.log(\"❌ Токена нет! Тест упадёт с 401\");\r",
+                  "} else {\r",
+                  "    console.log(\" Токен есть:\", pm.collectionVariables.get(\"access_token\"));\r",
+                  "}\r",
+                  "console.log(\" Токен перед запросом:\", pm.collectionVariables.get(\"access_token\"));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disabledSystemHeaders": {}
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml-dtd",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "User-Agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 YaBrowser/26.3.0.0 Safari/537.36",
+                "type": "text"
+              },
+              {
+                "key": "platform",
+                "value": "desktop",
+                "type": "text"
+              },
+              {
+                "key": "origin",
+                "value": "https://www.chitai-gorod.ru",
+                "type": "text"
+              },
+              {
+                "key": "referer",
+                "value": "https://www.chitai-gorod.ru/",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://web-agr.chitai-gorod.ru/web/api/v2/search/facet-search?phrase=война",
+              "protocol": "https",
+              "host": [
+                "web-agr",
+                "chitai-gorod",
+                "ru"
+              ],
+              "path": [
+                "web",
+                "api",
+                "v2",
+                "search",
+                "facet-search"
+              ],
+              "query": [
+                {
+                  "key": "phrase",
+                  "value": "война"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": ""
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "refresh_token",
+      "value": ""
+    }
+  ]
+}

@@ -1,0 +1,337 @@
+{
+	"id": "4335666d-4487-4f33-9771-15b90cd41d82",
+	"name": "Финальный проект по ручному тестированию \"Читай Город\"",
+	"timestamp": "2026-03-19T15:22:13.325Z",
+	"collection_id": "51881150-0d0972be-5a23-435f-a0d0-b4781f1ef563",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 12,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2026-03-19T15:22:08.986Z",
+	"totalFail": 3,
+	"results": [
+		{
+			"id": "596a7e20-10d7-4059-88f9-980a317d6be0",
+			"name": "Успешное обновление токена (валидный refresh token)",
+			"url": "https://web-agr.chitai-gorod.ru/web/api/v2/auth/refresh",
+			"time": 154,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Tokens exist": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Tokens exist": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				154
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Tokens exist": true
+				}
+			]
+		},
+		{
+			"id": "ae723766-57cb-4843-a0be-f4090efd15cd",
+			"name": "Некорректный формат запроса (неверный Accept)",
+			"url": "https://web-agr.chitai-gorod.ru/web/api/v2/search/facet-search?phrase=война",
+			"time": 594,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Статус должен быть 406 Not Acceptable": false,
+				"Статус должен быть 406 или 400": false,
+				"Статус не должен быть 200": false
+			},
+			"testPassFailCounts": {
+				"Статус должен быть 406 Not Acceptable": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Статус должен быть 406 или 400": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Статус не должен быть 200": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				594
+			],
+			"allTests": [
+				{
+					"Статус должен быть 406 Not Acceptable": false,
+					"Статус должен быть 406 или 400": false,
+					"Статус не должен быть 200": false
+				}
+			]
+		},
+		{
+			"id": "224c9ea6-a115-42fa-9ef3-3ee7b70832fe",
+			"name": "Получение персональных данных профиля с валидным токеном",
+			"url": "https://web-agr.chitai-gorod.ru/web/api/v1/profile/personal-data",
+			"time": 588,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				588
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "2fcfb9e6-5165-4d10-83f0-2522b601df8b",
+			"name": "Получение списка товаров в корзине авторизованного пользователя",
+			"url": "https://web-agr.chitai-gorod.ru/web/api/v1/cart",
+			"time": 565,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				565
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "6b517abf-3216-43bd-8496-419f1e2f962a",
+			"name": "Добавление товара в корзину",
+			"url": "https://web-agr.chitai-gorod.ru/web/api/v1/cart/product",
+			"time": 219,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				219
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "f5d8d12a-2de3-40a8-94e2-29d88d0acf6c",
+			"name": "Пустой поисковый запрос",
+			"url": "https://web-agr.chitai-gorod.ru/web/api/v2/search/facet-search?customerCityId=11183&phrase",
+			"time": 95,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Статус должен быть 400 Bad Request": true,
+				"Ответ содержит сообщение об ошибке": true,
+				"Статус не должен быть 200": true
+			},
+			"testPassFailCounts": {
+				"Статус должен быть 400 Bad Request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Ответ содержит сообщение об ошибке": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Статус не должен быть 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				95
+			],
+			"allTests": [
+				{
+					"Статус должен быть 400 Bad Request": true,
+					"Ответ содержит сообщение об ошибке": true,
+					"Статус не должен быть 200": true
+				}
+			]
+		},
+		{
+			"id": "3e44ff8e-f493-4ed3-ac3d-9f09a521bd14",
+			"name": "Запрос профиля с невалидным токеном",
+			"url": "https://web-agr.chitai-gorod.ru/web/api/v1/profile",
+			"time": 90,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				90
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "56904fbc-2441-435f-bb53-dccbb9ffa881",
+			"name": "Запрос несуществующего товара",
+			"url": "https://web-agr.chitai-gorod.ru/web/api/v1product/prestuplenie-i-nakazanie-2054981",
+			"time": 87,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Статус не должен быть 200": true,
+				"Ответ содержит ошибку": true
+			},
+			"testPassFailCounts": {
+				"Статус не должен быть 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Ответ содержит ошибку": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				87
+			],
+			"allTests": [
+				{
+					"Статус не должен быть 200": true,
+					"Ответ содержит ошибку": true
+				}
+			]
+		},
+		{
+			"id": "c72641c8-254a-4ff3-9b30-62506921f97d",
+			"name": "Использование неверного HTTP-метода (POST вместо GET)",
+			"url": "https://web-agr.chitai-gorod.ru/web/api/v1/profile",
+			"time": 85,
+			"responseCode": {
+				"code": 405,
+				"name": "Not Allowed"
+			},
+			"tests": {
+				"Status code is 405": true
+			},
+			"testPassFailCounts": {
+				"Status code is 405": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				85
+			],
+			"allTests": [
+				{
+					"Status code is 405": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 2477,
+	"collection": {
+		"requests": [
+			{
+				"id": "596a7e20-10d7-4059-88f9-980a317d6be0",
+				"method": "POST"
+			},
+			{
+				"id": "ae723766-57cb-4843-a0be-f4090efd15cd",
+				"method": "GET"
+			},
+			{
+				"id": "224c9ea6-a115-42fa-9ef3-3ee7b70832fe",
+				"method": "GET"
+			},
+			{
+				"id": "2fcfb9e6-5165-4d10-83f0-2522b601df8b",
+				"method": "GET"
+			},
+			{
+				"id": "6b517abf-3216-43bd-8496-419f1e2f962a",
+				"method": "POST"
+			},
+			{
+				"id": "f5d8d12a-2de3-40a8-94e2-29d88d0acf6c",
+				"method": "GET"
+			},
+			{
+				"id": "3e44ff8e-f493-4ed3-ac3d-9f09a521bd14",
+				"method": "GET"
+			},
+			{
+				"id": "56904fbc-2441-435f-bb53-dccbb9ffa881",
+				"method": "GET"
+			},
+			{
+				"id": "c72641c8-254a-4ff3-9b30-62506921f97d",
+				"method": "POST"
+			}
+		]
+	}
+}
